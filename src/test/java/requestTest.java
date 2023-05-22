@@ -3,13 +3,14 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import io.github.bonigarcia.wdm.WebDriverManager;
 
-public class requestTest {
+public class RequestTest {
     private WebDriver driver;
     @BeforeAll
     static void setUpAll() {
 // убедитесь, что файл chromedriver.exe расположен именно в каталоге C:\tmp
-        System.setProperty("webdriver.chrome.driver", "./driver/chromedriver.exe");
+   WebDriverManager.chromedriver().setup();
     }
 
     @BeforeEach
@@ -32,9 +33,9 @@ public class requestTest {
         driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("+79997773333");
         driver.findElement(By.cssSelector("[data-test-id=agreement]")).click();
         driver.findElement(By.className("button__text")).click();
-        String expected = " Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.";
-        String acrual = driver.findElement(By.cssSelector("[data-test-id=order-success]")).getText();
-        Assertions.assertEquals(expected,acrual);
+        String expected = "Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.";
+        String actual = driver.findElement(By.cssSelector("[data-test-id=order-success]")).getText().trim();
+        Assertions.assertEquals(expected,actual);
 
     }
 }
