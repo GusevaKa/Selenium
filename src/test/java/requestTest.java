@@ -7,10 +7,11 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class RequestTest {
     private WebDriver driver;
+
     @BeforeAll
     static void setUpAll() {
 // убедитесь, что файл chromedriver.exe расположен именно в каталоге C:\tmp
-   WebDriverManager.chromedriver().setup();
+        WebDriverManager.chromedriver().setup();
     }
 
     @BeforeEach
@@ -21,11 +22,13 @@ public class RequestTest {
         options.addArguments("--headless");
         driver = new ChromeDriver(options);
     }
+
     @AfterEach
     void tearDown() {
         driver.quit();
         driver = null;
     }
+
     @Test
     void shouldTest() {
         driver.get("http://localhost:9999/");
@@ -35,7 +38,7 @@ public class RequestTest {
         driver.findElement(By.className("button__text")).click();
         String expected = "Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.";
         String actual = driver.findElement(By.cssSelector("[data-test-id=order-success]")).getText().trim();
-        Assertions.assertEquals(expected,actual);
+        Assertions.assertEquals(expected, actual);
 
     }
 }
